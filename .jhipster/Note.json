@@ -1,0 +1,42 @@
+{
+  "name": "Note",
+  "fields": [
+    {
+      "fieldName": "note",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "eleve",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "apperciation",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "evaluation",
+      "otherEntityRelationshipName": "note",
+      "relationshipName": "evaluation",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20220901091911",
+  "entityTableName": "notes",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "evaluation",
+  "applications": "*",
+  "microserviceName": "evaluation"
+}

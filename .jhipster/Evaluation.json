@@ -1,0 +1,48 @@
+{
+  "name": "Evaluation",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "2",
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "dateEvaluation",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "classe",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "matiere",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "trimestre",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "trimestre",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20220901091811",
+  "entityTableName": "evaluations",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "evaluation",
+  "applications": "*",
+  "microserviceName": "evaluation"
+}
