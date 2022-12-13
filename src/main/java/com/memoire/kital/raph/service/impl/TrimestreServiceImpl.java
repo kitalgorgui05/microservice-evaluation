@@ -1,5 +1,7 @@
 package com.memoire.kital.raph.service.impl;
 
+import com.memoire.kital.raph.feignRestClient.AnneeRestClient;
+import com.memoire.kital.raph.restClient.AnneeClient;
 import com.memoire.kital.raph.service.TrimestreService;
 import com.memoire.kital.raph.domain.Trimestre;
 import com.memoire.kital.raph.repository.TrimestreRepository;
@@ -28,9 +30,12 @@ public class TrimestreServiceImpl implements TrimestreService {
 
     private final TrimestreMapper trimestreMapper;
 
-    public TrimestreServiceImpl(TrimestreRepository trimestreRepository, TrimestreMapper trimestreMapper) {
+    private final AnneeRestClient anneeRestClient;
+
+    public TrimestreServiceImpl(TrimestreRepository trimestreRepository, TrimestreMapper trimestreMapper, AnneeRestClient anneeRestClient) {
         this.trimestreRepository = trimestreRepository;
         this.trimestreMapper = trimestreMapper;
+        this.anneeRestClient = anneeRestClient;
     }
 
     @Override
@@ -52,14 +57,18 @@ public class TrimestreServiceImpl implements TrimestreService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<TrimestreDTO> findOne(Long id) {
-        log.debug("Request to get Trimestre : {}", id);
+    public Optional<TrimestreDTO> findOne(String id) {
+        /*log.debug("Request to get Trimestre : {}", id);
         return trimestreRepository.findById(id)
-            .map(trimestreMapper::toDto);
+            .map(trimestreMapper::toDto);*/
+        Trimestre trimestre=trimestreRepository.findById(id).orElse(null);
+        AnneeClient anneeClient= anneeRestClient.getAnnee(trimestre.getAnnee()).getBody();
+        trimestre.setAnneeClient(anneeClient);
+        return Optional.ofNullable(trimestreMapper.toDto(trimestre));
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete Trimestre : {}", id);
         trimestreRepository.deleteById(id);
     }

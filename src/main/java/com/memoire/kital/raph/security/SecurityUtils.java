@@ -100,4 +100,13 @@ public final class SecurityUtils {
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
     }
+
+    public static String getJwtToken() {
+        String result ="";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (null != authentication && authentication instanceof JwtAuthenticationToken) {
+            result=  ((JwtAuthenticationToken)authentication).getToken().getTokenValue();
+        }
+        return result;
+    }
 }

@@ -126,7 +126,7 @@ public class NoteResourceIT {
         int databaseSizeBeforeCreate = noteRepository.findAll().size();
 
         // Create the Note with an existing ID
-        note.setId(1L);
+        note.setId(null);
         NoteDTO noteDTO = noteMapper.toDto(note);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -191,12 +191,12 @@ public class NoteResourceIT {
         restNoteMockMvc.perform(get("/api/notes?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(note.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(note.getId())))
             .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE.doubleValue())))
             .andExpect(jsonPath("$.[*].eleve").value(hasItem(DEFAULT_ELEVE)))
             .andExpect(jsonPath("$.[*].apperciation").value(hasItem(DEFAULT_APPERCIATION.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getNote() throws Exception {
@@ -207,7 +207,7 @@ public class NoteResourceIT {
         restNoteMockMvc.perform(get("/api/notes/{id}", note.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(note.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(note.getId()))
             .andExpect(jsonPath("$.note").value(DEFAULT_NOTE.doubleValue()))
             .andExpect(jsonPath("$.eleve").value(DEFAULT_ELEVE))
             .andExpect(jsonPath("$.apperciation").value(DEFAULT_APPERCIATION.toString()));
@@ -220,7 +220,7 @@ public class NoteResourceIT {
         // Initialize the database
         noteRepository.saveAndFlush(note);
 
-        Long id = note.getId();
+        String id = note.getId();
 
         defaultNoteShouldBeFound("id.equals=" + id);
         defaultNoteShouldNotBeFound("id.notEquals=" + id);
@@ -426,7 +426,7 @@ public class NoteResourceIT {
         em.flush();
         note.setEvaluation(evaluation);
         noteRepository.saveAndFlush(note);
-        Long evaluationId = evaluation.getId();
+        String evaluationId = evaluation.getId();
 
         // Get all the noteList where evaluation equals to evaluationId
         defaultNoteShouldBeFound("evaluationId.equals=" + evaluationId);
@@ -442,7 +442,7 @@ public class NoteResourceIT {
         restNoteMockMvc.perform(get("/api/notes?sort=id,desc&" + filter))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(note.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(note.getId())))
             .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE.doubleValue())))
             .andExpect(jsonPath("$.[*].eleve").value(hasItem(DEFAULT_ELEVE)))
             .andExpect(jsonPath("$.[*].apperciation").value(hasItem(DEFAULT_APPERCIATION.toString())));

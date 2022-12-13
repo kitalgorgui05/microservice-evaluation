@@ -33,7 +33,7 @@ public class EvaluationCriteria implements Serializable, Criteria {
 
     private StringFilter matiere;
 
-    private LongFilter trimestreId;
+    private StringFilter trimestreId;
 
     public EvaluationCriteria() {
     }
@@ -92,11 +92,11 @@ public class EvaluationCriteria implements Serializable, Criteria {
         this.matiere = matiere;
     }
 
-    public LongFilter getTrimestreId() {
+    public StringFilter getTrimestreId() {
         return trimestreId;
     }
 
-    public void setTrimestreId(LongFilter trimestreId) {
+    public void setTrimestreId(StringFilter trimestreId) {
         this.trimestreId = trimestreId;
     }
 
@@ -118,7 +118,6 @@ public class EvaluationCriteria implements Serializable, Criteria {
             Objects.equals(matiere, that.matiere) &&
             Objects.equals(trimestreId, that.trimestreId);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(

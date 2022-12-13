@@ -18,7 +18,7 @@ public interface NoteMapper extends EntityMapper<NoteDTO, Note> {
     @Mapping(source = "evaluationId", target = "evaluation")
     Note toEntity(NoteDTO noteDTO);
 
-    default Note fromId(Long id) {
+    default Note fromId(String id) {
         if (id == null) {
             return null;
         }

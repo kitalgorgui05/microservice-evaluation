@@ -22,9 +22,7 @@ import io.github.jhipster.service.filter.StringFilter;
  */
 public class NoteCriteria implements Serializable, Criteria {
 
-    private static final long serialVersionUID = 1L;
-
-    private LongFilter id;
+    private StringFilter id;
 
     private DoubleFilter note;
 
@@ -47,11 +45,11 @@ public class NoteCriteria implements Serializable, Criteria {
         return new NoteCriteria(this);
     }
 
-    public LongFilter getId() {
+    public StringFilter getId() {
         return id;
     }
 
-    public void setId(LongFilter id) {
+    public void setId(StringFilter id) {
         this.id = id;
     }
 

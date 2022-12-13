@@ -1,8 +1,11 @@
 package com.memoire.kital.raph.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.memoire.kital.raph.restClient.EleveClient;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -17,12 +20,12 @@ import java.io.Serializable;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Note implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid",strategy = "uuid")
+    @Column(name = "id" , unique = true)
+    private String id;
     @NotNull
     @Column(name = "note", nullable = false)
     private Double note;
@@ -31,7 +34,8 @@ public class Note implements Serializable {
     @Column(name = "eleve", nullable = false)
     private String eleve;
 
-    
+    @Transient
+    private EleveClient eleveClient;
     @Lob
     @Column(name = "apperciation", nullable = false)
     private String apperciation;
@@ -41,11 +45,11 @@ public class Note implements Serializable {
     private Evaluation evaluation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -73,6 +77,14 @@ public class Note implements Serializable {
 
     public void setEleve(String eleve) {
         this.eleve = eleve;
+    }
+
+    public EleveClient getEleveClient() {
+        return eleveClient;
+    }
+
+    public void setEleveClient(EleveClient eleveClient) {
+        this.eleveClient = eleveClient;
     }
 
     public String getApperciation() {

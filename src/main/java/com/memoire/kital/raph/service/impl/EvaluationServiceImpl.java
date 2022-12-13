@@ -1,5 +1,9 @@
 package com.memoire.kital.raph.service.impl;
 
+import com.memoire.kital.raph.feignRestClient.ClasseRestClient;
+import com.memoire.kital.raph.feignRestClient.MatiereRestClient;
+import com.memoire.kital.raph.restClient.ClasseClient;
+import com.memoire.kital.raph.restClient.MatiereClient;
 import com.memoire.kital.raph.service.EvaluationService;
 import com.memoire.kital.raph.domain.Evaluation;
 import com.memoire.kital.raph.repository.EvaluationRepository;
@@ -14,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Service Implementation for managing {@link Evaluation}.
@@ -29,17 +32,21 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     private final EvaluationMapper evaluationMapper;
 
-    public EvaluationServiceImpl(EvaluationRepository evaluationRepository, EvaluationMapper evaluationMapper) {
+    private final ClasseRestClient classeRestClient;
+    private final MatiereRestClient matiereRestClient;
+
+    public EvaluationServiceImpl(EvaluationRepository evaluationRepository, EvaluationMapper evaluationMapper, ClasseRestClient classeRestClient, MatiereRestClient matiereRestClient) {
         this.evaluationRepository = evaluationRepository;
         this.evaluationMapper = evaluationMapper;
+        this.classeRestClient = classeRestClient;
+        this.matiereRestClient = matiereRestClient;
     }
 
     @Override
     public EvaluationDTO save(EvaluationDTO evaluationDTO) {
         log.debug("Request to save Evaluation : {}", evaluationDTO);
         Evaluation evaluation = evaluationMapper.toEntity(evaluationDTO);
-        evaluation.setId(UUID.randomUUID().toString());
-        evaluation = evaluationRepository.save(evaluation);
+        evaluation = evaluationRepository.saveAndFlush(evaluation);
         return evaluationMapper.toDto(evaluation);
     }
 
@@ -55,9 +62,16 @@ public class EvaluationServiceImpl implements EvaluationService {
     @Override
     @Transactional(readOnly = true)
     public Optional<EvaluationDTO> findOne(String id) {
-        log.debug("Request to get Evaluation : {}", id);
+        /*log.debug("Request to get Evaluation : {}", id);
         return evaluationRepository.findById(id)
-            .map(evaluationMapper::toDto);
+            .map(evaluationMapper::toDto);*/
+        Evaluation evaluation=evaluationRepository.findById(id).orElse(null);
+        ClasseClient classeClient= classeRestClient.getClasse(evaluation.getClasse()).getBody();
+        MatiereClient matiereClient=matiereRestClient.getMatiere(evaluation.getMatiere()).getBody();
+        evaluation.setClasseClient(classeClient);
+        evaluation.setMatiereClient(matiereClient);
+
+        return Optional.ofNullable(evaluationMapper.toDto(evaluation));
     }
 
     @Override

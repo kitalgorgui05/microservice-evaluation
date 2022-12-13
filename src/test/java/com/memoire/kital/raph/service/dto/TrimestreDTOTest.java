@@ -10,12 +10,12 @@ public class TrimestreDTOTest {
     public void dtoEqualsVerifier() throws Exception {
         TestUtil.equalsVerifier(TrimestreDTO.class);
         TrimestreDTO trimestreDTO1 = new TrimestreDTO();
-        trimestreDTO1.setId(1L);
+        trimestreDTO1.setId(null);
         TrimestreDTO trimestreDTO2 = new TrimestreDTO();
         assertThat(trimestreDTO1).isNotEqualTo(trimestreDTO2);
         trimestreDTO2.setId(trimestreDTO1.getId());
         assertThat(trimestreDTO1).isEqualTo(trimestreDTO2);
-        trimestreDTO2.setId(2L);
+        trimestreDTO2.setId(null);
         assertThat(trimestreDTO1).isNotEqualTo(trimestreDTO2);
         trimestreDTO1.setId(null);
         assertThat(trimestreDTO1).isNotEqualTo(trimestreDTO2);

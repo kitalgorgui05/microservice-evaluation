@@ -132,7 +132,7 @@ public class EvaluationResourceIT {
         int databaseSizeBeforeCreate = evaluationRepository.findAll().size();
 
         // Create the Evaluation with an existing ID
-        evaluation.setId(1L);
+        evaluation.setId(null);
         EvaluationDTO evaluationDTO = evaluationMapper.toDto(evaluation);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -237,13 +237,13 @@ public class EvaluationResourceIT {
         restEvaluationMockMvc.perform(get("/api/evaluations?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(evaluation.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(evaluation.getId())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].dateEvaluation").value(hasItem(DEFAULT_DATE_EVALUATION.toString())))
             .andExpect(jsonPath("$.[*].classe").value(hasItem(DEFAULT_CLASSE)))
             .andExpect(jsonPath("$.[*].matiere").value(hasItem(DEFAULT_MATIERE)));
     }
-    
+
     @Test
     @Transactional
     public void getEvaluation() throws Exception {
@@ -254,7 +254,7 @@ public class EvaluationResourceIT {
         restEvaluationMockMvc.perform(get("/api/evaluations/{id}", evaluation.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(evaluation.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(evaluation.getId()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.dateEvaluation").value(DEFAULT_DATE_EVALUATION.toString()))
             .andExpect(jsonPath("$.classe").value(DEFAULT_CLASSE))
@@ -268,7 +268,7 @@ public class EvaluationResourceIT {
         // Initialize the database
         evaluationRepository.saveAndFlush(evaluation);
 
-        Long id = evaluation.getId();
+        String id = evaluation.getId();
 
         defaultEvaluationShouldBeFound("id.equals=" + id);
         defaultEvaluationShouldNotBeFound("id.notEquals=" + id);
@@ -577,7 +577,7 @@ public class EvaluationResourceIT {
         em.flush();
         evaluation.setTrimestre(trimestre);
         evaluationRepository.saveAndFlush(evaluation);
-        Long trimestreId = trimestre.getId();
+        String trimestreId = trimestre.getId();
 
         // Get all the evaluationList where trimestre equals to trimestreId
         defaultEvaluationShouldBeFound("trimestreId.equals=" + trimestreId);
@@ -593,7 +593,7 @@ public class EvaluationResourceIT {
         restEvaluationMockMvc.perform(get("/api/evaluations?sort=id,desc&" + filter))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(evaluation.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(evaluation.getId())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
             .andExpect(jsonPath("$.[*].dateEvaluation").value(hasItem(DEFAULT_DATE_EVALUATION.toString())))
             .andExpect(jsonPath("$.[*].classe").value(hasItem(DEFAULT_CLASSE)))

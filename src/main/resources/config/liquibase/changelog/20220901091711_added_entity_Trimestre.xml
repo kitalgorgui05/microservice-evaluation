@@ -13,7 +13,7 @@
     -->
     <changeSet id="20220901091711-1" author="jhipster">
         <createTable tableName="trimestres">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="date_debut" type="date">
@@ -47,7 +47,7 @@
                   file="config/liquibase/fake-data/trimestres.csv"
                   separator=";"
                   tableName="trimestres">
-            <column name="id" type="numeric"/>
+            <column name="id" type="string"/>
             <column name="date_debut" type="date"/>
             <column name="date_fin" type="date"/>
             <column name="annee" type="string"/>

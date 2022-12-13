@@ -14,7 +14,7 @@ public interface TrimestreMapper extends EntityMapper<TrimestreDTO, Trimestre> {
 
 
 
-    default Trimestre fromId(Long id) {
+    default Trimestre fromId(String id) {
         if (id == null) {
             return null;
         }

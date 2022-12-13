@@ -6,13 +6,13 @@
     <!--
         Added the constraints for entity Evaluation.
     -->
-    <changeSet id="20220901091811-2" author="jhipster">
-        
+    <!--<changeSet id="20220901091811-2" author="jhipster">
+
         <addForeignKeyConstraint baseColumnNames="trimestre_id"
                                  baseTableName="evaluations"
                                  constraintName="fk_evaluations_trimestre_id"
                                  referencedColumnNames="id"
                                  referencedTableName="trimestres"/>
 
-    </changeSet>
+    </changeSet>-->
 </databaseChangeLog>

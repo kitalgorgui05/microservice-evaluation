@@ -1,5 +1,8 @@
 package com.memoire.kital.raph.service.dto;
 
+import com.memoire.kital.raph.restClient.ClasseClient;
+import com.memoire.kital.raph.restClient.MatiereClient;
+
 import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -21,11 +24,12 @@ public class EvaluationDTO implements Serializable {
     @NotNull
     private String classe;
 
+    private ClasseClient classeClient;
     @NotNull
     private String matiere;
 
-
-    private Long trimestreId;
+    private MatiereClient matiereClient;
+    private String trimestreId;
 
     public String getId() {
         return id;
@@ -67,12 +71,28 @@ public class EvaluationDTO implements Serializable {
         this.matiere = matiere;
     }
 
-    public Long getTrimestreId() {
+    public String getTrimestreId() {
         return trimestreId;
     }
 
-    public void setTrimestreId(Long trimestreId) {
+    public void setTrimestreId(String trimestreId) {
         this.trimestreId = trimestreId;
+    }
+
+    public ClasseClient getClasseClient() {
+        return classeClient;
+    }
+
+    public void setClasseClient(ClasseClient classeClient) {
+        this.classeClient = classeClient;
+    }
+
+    public MatiereClient getMatiereClient() {
+        return matiereClient;
+    }
+
+    public void setMatiereClient(MatiereClient matiereClient) {
+        this.matiereClient = matiereClient;
     }
 
     @Override
@@ -101,7 +121,9 @@ public class EvaluationDTO implements Serializable {
             ", dateEvaluation='" + getDateEvaluation() + "'" +
             ", classe='" + getClasse() + "'" +
             ", matiere='" + getMatiere() + "'" +
-            ", trimestreId=" + getTrimestreId() +
+            ", trimestreId=" + getTrimestreId() +"'"+
+            ",classeClient="+ getClasseClient()+"'"+
+            ",matiereClient="+ getMatiereClient()+
             "}";
     }
 }

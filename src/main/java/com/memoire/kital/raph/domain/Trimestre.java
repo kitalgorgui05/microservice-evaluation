@@ -1,7 +1,10 @@
 package com.memoire.kital.raph.domain;
 
+import com.memoire.kital.raph.restClient.AnneeClient;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -16,12 +19,12 @@ import java.time.LocalDate;
 @Table(name = "trimestres")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Trimestre implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+    @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "id",unique = true)
+    private String id;
 
     @NotNull
     @Column(name = "date_debut", nullable = false)
@@ -35,12 +38,14 @@ public class Trimestre implements Serializable {
     @Column(name = "annee", nullable = false)
     private String annee;
 
+    @Transient
+    private AnneeClient anneeClient;
     // jhipster-needle-entity-add-field - JHipster will add fields here
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -83,6 +88,14 @@ public class Trimestre implements Serializable {
         this.annee = annee;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public AnneeClient getAnneeClient() {
+        return anneeClient;
+    }
+
+    public void setAnneeClient(AnneeClient anneeClient) {
+        this.anneeClient = anneeClient;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -23,9 +23,7 @@ import io.github.jhipster.service.filter.LocalDateFilter;
  */
 public class TrimestreCriteria implements Serializable, Criteria {
 
-    private static final long serialVersionUID = 1L;
-
-    private LongFilter id;
+    private StringFilter id;
 
     private LocalDateFilter dateDebut;
 
@@ -48,11 +46,11 @@ public class TrimestreCriteria implements Serializable, Criteria {
         return new TrimestreCriteria(this);
     }
 
-    public LongFilter getId() {
+    public StringFilter getId() {
         return id;
     }
 
-    public void setId(LongFilter id) {
+    public void setId(StringFilter id) {
         this.id = id;
     }
 

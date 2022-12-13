@@ -35,12 +35,12 @@ public interface TrimestreService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<TrimestreDTO> findOne(Long id);
+    Optional<TrimestreDTO> findOne(String id);
 
     /**
      * Delete the "id" trimestre.
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);
+    void delete(String id);
 }

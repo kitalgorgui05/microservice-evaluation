@@ -15,7 +15,7 @@ public class TrimestreMapperTest {
 
     @Test
     public void testEntityFromId() {
-        Long id = 1L;
+        String id = null;
         assertThat(trimestreMapper.fromId(id).getId()).isEqualTo(id);
         assertThat(trimestreMapper.fromId(null)).isNull();
     }

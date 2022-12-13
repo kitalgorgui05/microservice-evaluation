@@ -123,7 +123,7 @@ public class NoteResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the noteDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/notes/{id}")
-    public ResponseEntity<NoteDTO> getNote(@PathVariable Long id) {
+    public ResponseEntity<NoteDTO> getNote(@PathVariable String id) {
         log.debug("REST request to get Note : {}", id);
         Optional<NoteDTO> noteDTO = noteService.findOne(id);
         return ResponseUtil.wrapOrNotFound(noteDTO);
@@ -136,7 +136,7 @@ public class NoteResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/notes/{id}")
-    public ResponseEntity<Void> deleteNote(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteNote(@PathVariable String id) {
         log.debug("REST request to delete Note : {}", id);
         noteService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();

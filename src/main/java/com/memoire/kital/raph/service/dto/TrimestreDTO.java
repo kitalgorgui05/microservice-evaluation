@@ -1,5 +1,7 @@
 package com.memoire.kital.raph.service.dto;
 
+import com.memoire.kital.raph.restClient.AnneeClient;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -8,8 +10,8 @@ import java.io.Serializable;
  * A DTO for the {@link com.memoire.kital.raph.domain.Trimestre} entity.
  */
 public class TrimestreDTO implements Serializable {
-    
-    private Long id;
+
+    private String id;
 
     @NotNull
     private LocalDate dateDebut;
@@ -20,12 +22,13 @@ public class TrimestreDTO implements Serializable {
     @NotNull
     private String annee;
 
-    
-    public Long getId() {
+    private AnneeClient anneeClient;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -53,6 +56,14 @@ public class TrimestreDTO implements Serializable {
         this.annee = annee;
     }
 
+    public AnneeClient getAnneeClient() {
+        return anneeClient;
+    }
+
+    public void setAnneeClient(AnneeClient anneeClient) {
+        this.anneeClient = anneeClient;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -78,6 +89,7 @@ public class TrimestreDTO implements Serializable {
             ", dateDebut='" + getDateDebut() + "'" +
             ", dateFin='" + getDateFin() + "'" +
             ", annee='" + getAnnee() + "'" +
+            ",anneeClient='"+ getAnneeClient()+"'"+
             "}";
     }
 }

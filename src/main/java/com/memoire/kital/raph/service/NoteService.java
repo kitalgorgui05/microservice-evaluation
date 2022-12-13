@@ -35,12 +35,12 @@ public interface NoteService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<NoteDTO> findOne(Long id);
+    Optional<NoteDTO> findOne(String id);
 
     /**
      * Delete the "id" note.
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);
+    void delete(String id);
 }

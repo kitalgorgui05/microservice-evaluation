@@ -1,9 +1,13 @@
 package com.memoire.kital.raph.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.memoire.kital.raph.restClient.ClasseClient;
+import com.memoire.kital.raph.restClient.MatiereClient;
 import com.memoire.kital.raph.utils.SizeMapper;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -18,8 +22,11 @@ import java.time.Instant;
 @Table(name = "evaluations")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Evaluation implements Serializable {
-
+    @EqualsAndHashCode.Include
     @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "id",unique = true)
     private String id;
 
     @NotNull
@@ -35,9 +42,15 @@ public class Evaluation implements Serializable {
     @Column(name = "classe", nullable = false)
     private String classe;
 
+    @Transient
+    private ClasseClient classeClient;
+
     @NotNull
     @Column(name = "matiere", nullable = false)
     private String matiere;
+
+    @Transient
+    private MatiereClient matiereClient;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "evaluations", allowSetters = true)
@@ -118,6 +131,22 @@ public class Evaluation implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
+    public ClasseClient getClasseClient() {
+        return classeClient;
+    }
+
+    public void setClasseClient(ClasseClient classeClient) {
+        this.classeClient = classeClient;
+    }
+
+    public MatiereClient getMatiereClient() {
+        return matiereClient;
+    }
+
+    public void setMatiereClient(MatiereClient matiereClient) {
+        this.matiereClient = matiereClient;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -143,6 +172,8 @@ public class Evaluation implements Serializable {
             ", dateEvaluation='" + getDateEvaluation() + "'" +
             ", classe='" + getClasse() + "'" +
             ", matiere='" + getMatiere() + "'" +
+            ",classeClient='"+getClasseClient()+"'"+
+            ",matiereClient='"+getMatiereClient()+
             "}";
     }
 }

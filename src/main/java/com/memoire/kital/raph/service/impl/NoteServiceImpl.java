@@ -1,5 +1,7 @@
 package com.memoire.kital.raph.service.impl;
 
+import com.memoire.kital.raph.feignRestClient.IEleveRestClient;
+import com.memoire.kital.raph.restClient.EleveClient;
 import com.memoire.kital.raph.service.NoteService;
 import com.memoire.kital.raph.domain.Note;
 import com.memoire.kital.raph.repository.NoteRepository;
@@ -28,16 +30,18 @@ public class NoteServiceImpl implements NoteService {
 
     private final NoteMapper noteMapper;
 
-    public NoteServiceImpl(NoteRepository noteRepository, NoteMapper noteMapper) {
+    private final IEleveRestClient iEleveRestClient;
+    public NoteServiceImpl(NoteRepository noteRepository, NoteMapper noteMapper, IEleveRestClient iEleveRestClient) {
         this.noteRepository = noteRepository;
         this.noteMapper = noteMapper;
+        this.iEleveRestClient = iEleveRestClient;
     }
 
     @Override
     public NoteDTO save(NoteDTO noteDTO) {
         log.debug("Request to save Note : {}", noteDTO);
         Note note = noteMapper.toEntity(noteDTO);
-        note = noteRepository.save(note);
+        note = noteRepository.saveAndFlush(note);
         return noteMapper.toDto(note);
     }
 
@@ -52,14 +56,15 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<NoteDTO> findOne(Long id) {
-        log.debug("Request to get Note : {}", id);
-        return noteRepository.findById(id)
-            .map(noteMapper::toDto);
+    public Optional<NoteDTO> findOne(String id) {
+        Note note=noteRepository.findById(id).orElse(null);
+        EleveClient eleveClient= iEleveRestClient.getEleve(note.getEleve()).getBody();
+        note.setEleveClient(eleveClient);
+        return Optional.ofNullable(noteMapper.toDto(note));
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete Note : {}", id);
         noteRepository.deleteById(id);
     }

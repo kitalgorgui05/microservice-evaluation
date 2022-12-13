@@ -1,5 +1,7 @@
 package com.memoire.kital.raph.service.dto;
 
+import com.memoire.kital.raph.restClient.EleveClient;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import javax.persistence.Lob;
@@ -8,8 +10,8 @@ import javax.persistence.Lob;
  * A DTO for the {@link com.memoire.kital.raph.domain.Note} entity.
  */
 public class NoteDTO implements Serializable {
-    
-    private Long id;
+
+    private String id;
 
     @NotNull
     private Double note;
@@ -17,18 +19,19 @@ public class NoteDTO implements Serializable {
     @NotNull
     private String eleve;
 
-    
+    private EleveClient eleveClient;
+
     @Lob
     private String apperciation;
 
 
-    private Long evaluationId;
-    
-    public Long getId() {
+    private String evaluationId;
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -48,6 +51,14 @@ public class NoteDTO implements Serializable {
         this.eleve = eleve;
     }
 
+    public EleveClient getEleveClient() {
+        return eleveClient;
+    }
+
+    public void setEleveClient(EleveClient eleveClient) {
+        this.eleveClient = eleveClient;
+    }
+
     public String getApperciation() {
         return apperciation;
     }
@@ -56,11 +67,11 @@ public class NoteDTO implements Serializable {
         this.apperciation = apperciation;
     }
 
-    public Long getEvaluationId() {
+    public String getEvaluationId() {
         return evaluationId;
     }
 
-    public void setEvaluationId(Long evaluationId) {
+    public void setEvaluationId(String evaluationId) {
         this.evaluationId = evaluationId;
     }
 

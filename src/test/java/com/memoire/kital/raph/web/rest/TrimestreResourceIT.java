@@ -127,7 +127,7 @@ public class TrimestreResourceIT {
         int databaseSizeBeforeCreate = trimestreRepository.findAll().size();
 
         // Create the Trimestre with an existing ID
-        trimestre.setId(1L);
+        trimestre.setId(null);
         TrimestreDTO trimestreDTO = trimestreMapper.toDto(trimestre);
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -212,12 +212,12 @@ public class TrimestreResourceIT {
         restTrimestreMockMvc.perform(get("/api/trimestres?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(trimestre.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(trimestre.getId())))
             .andExpect(jsonPath("$.[*].dateDebut").value(hasItem(DEFAULT_DATE_DEBUT.toString())))
             .andExpect(jsonPath("$.[*].dateFin").value(hasItem(DEFAULT_DATE_FIN.toString())))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));
     }
-    
+
     @Test
     @Transactional
     public void getTrimestre() throws Exception {
@@ -228,7 +228,7 @@ public class TrimestreResourceIT {
         restTrimestreMockMvc.perform(get("/api/trimestres/{id}", trimestre.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(trimestre.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(trimestre.getId()))
             .andExpect(jsonPath("$.dateDebut").value(DEFAULT_DATE_DEBUT.toString()))
             .andExpect(jsonPath("$.dateFin").value(DEFAULT_DATE_FIN.toString()))
             .andExpect(jsonPath("$.annee").value(DEFAULT_ANNEE));
@@ -241,7 +241,7 @@ public class TrimestreResourceIT {
         // Initialize the database
         trimestreRepository.saveAndFlush(trimestre);
 
-        Long id = trimestre.getId();
+        String id = trimestre.getId();
 
         defaultTrimestreShouldBeFound("id.equals=" + id);
         defaultTrimestreShouldNotBeFound("id.notEquals=" + id);
@@ -548,7 +548,7 @@ public class TrimestreResourceIT {
         restTrimestreMockMvc.perform(get("/api/trimestres?sort=id,desc&" + filter))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(trimestre.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(trimestre.getId())))
             .andExpect(jsonPath("$.[*].dateDebut").value(hasItem(DEFAULT_DATE_DEBUT.toString())))
             .andExpect(jsonPath("$.[*].dateFin").value(hasItem(DEFAULT_DATE_FIN.toString())))
             .andExpect(jsonPath("$.[*].annee").value(hasItem(DEFAULT_ANNEE)));

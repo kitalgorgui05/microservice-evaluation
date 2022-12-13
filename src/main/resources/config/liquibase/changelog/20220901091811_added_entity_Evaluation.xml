@@ -28,7 +28,7 @@
             <column name="matiere" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="trimestre_id" type="bigint">
+            <column name="trimestre_id" type="varchar(32)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

@@ -15,7 +15,7 @@ public class NoteMapperTest {
 
     @Test
     public void testEntityFromId() {
-        Long id = 1L;
+        String id = null;
         assertThat(noteMapper.fromId(id).getId()).isEqualTo(id);
         assertThat(noteMapper.fromId(null)).isNull();
     }

@@ -123,7 +123,7 @@ public class TrimestreResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the trimestreDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/trimestres/{id}")
-    public ResponseEntity<TrimestreDTO> getTrimestre(@PathVariable Long id) {
+    public ResponseEntity<TrimestreDTO> getTrimestre(@PathVariable String id) {
         log.debug("REST request to get Trimestre : {}", id);
         Optional<TrimestreDTO> trimestreDTO = trimestreService.findOne(id);
         return ResponseUtil.wrapOrNotFound(trimestreDTO);
@@ -136,7 +136,7 @@ public class TrimestreResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/trimestres/{id}")
-    public ResponseEntity<Void> deleteTrimestre(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTrimestre(@PathVariable String id) {
         log.debug("REST request to delete Trimestre : {}", id);
         trimestreService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();

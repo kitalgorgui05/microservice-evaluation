@@ -89,7 +89,7 @@ public class NoteQueryService extends QueryService<Note> {
         Specification<Note> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getId(), Note_.id));
+                specification = specification.and(buildStringSpecification(criteria.getId(), Note_.id));
             }
             if (criteria.getNote() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getNote(), Note_.note));

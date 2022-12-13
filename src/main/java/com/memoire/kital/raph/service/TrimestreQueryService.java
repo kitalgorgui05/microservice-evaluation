@@ -89,7 +89,7 @@ public class TrimestreQueryService extends QueryService<Trimestre> {
         Specification<Trimestre> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getId(), Trimestre_.id));
+                specification = specification.and(buildStringSpecification(criteria.getId(), Trimestre_.id));
             }
             if (criteria.getDateDebut() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDateDebut(), Trimestre_.dateDebut));

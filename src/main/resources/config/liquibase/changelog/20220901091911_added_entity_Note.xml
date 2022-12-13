@@ -13,7 +13,7 @@
     -->
     <changeSet id="20220901091911-1" author="jhipster">
         <createTable tableName="notes">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="note" type="double">
@@ -25,7 +25,7 @@
             <column name="apperciation" type="${clobType}">
                 <constraints nullable="false" />
             </column>
-            <column name="evaluation_id" type="bigint">
+            <column name="evaluation_id" type="varchar(32)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -50,7 +50,7 @@
                   file="config/liquibase/fake-data/notes.csv"
                   separator=";"
                   tableName="notes">
-            <column name="id" type="numeric"/>
+            <column name="id" type="string"/>
             <column name="note" type="numeric"/>
             <column name="eleve" type="string"/>
             <column name="apperciation" type="clob"/>
