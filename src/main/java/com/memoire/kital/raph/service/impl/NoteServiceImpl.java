@@ -62,7 +62,6 @@ public class NoteServiceImpl implements NoteService {
         note.setEleveClient(eleveClient);
         return Optional.ofNullable(noteMapper.toDto(note));
     }
-
     @Override
     public void delete(String id) {
         log.debug("Request to delete Note : {}", id);

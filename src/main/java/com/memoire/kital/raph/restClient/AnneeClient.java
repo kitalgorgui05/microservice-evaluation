@@ -1,17 +1,30 @@
 package com.memoire.kital.raph.restClient;
 
 import com.memoire.kital.raph.utils.SizeMapper;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+
 
 public class AnneeClient {
 
     private String id;
 
     @NotNull
-    @Size(min = 4, max = 10)
+    @Size(min = 4, max = 12)
     private String nom;
+
+    @NotNull
+    private LocalDate dateDebut;
+
+    @NotNull
+    private LocalDate dateFin;
+
 
     public String getId() {
         return id;
@@ -27,6 +40,22 @@ public class AnneeClient {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public LocalDate getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(LocalDate dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public LocalDate getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(LocalDate dateFin) {
+        this.dateFin = dateFin;
     }
 
     @Override
@@ -49,9 +78,11 @@ public class AnneeClient {
     // prettier-ignore
     @Override
     public String toString() {
-        return "AnneeClient{" +
+        return "AnneeDTO{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
+            ", dateDebut='" + getDateDebut() + "'" +
+            ", dateFin='" + getDateFin() + "'" +
             "}";
     }
 }

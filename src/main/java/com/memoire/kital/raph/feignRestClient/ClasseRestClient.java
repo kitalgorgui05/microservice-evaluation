@@ -1,5 +1,6 @@
 package com.memoire.kital.raph.feignRestClient;
 
+import com.memoire.kital.raph.feignRestClient.interceptor.FeignClientInterceptor;
 import com.memoire.kital.raph.restClient.ClasseClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "classe", url = "http://localhost:8086")
+@FeignClient(name = "classe", url = "http://localhost:8086",configuration = FeignClientInterceptor.class)
 public interface ClasseRestClient {
 
     @GetMapping("/api/classes")
