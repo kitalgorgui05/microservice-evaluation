@@ -1,10 +1,12 @@
 package com.memoire.kital.raph.service;
 
+import com.memoire.kital.raph.restClient.EleveDTOReq;
 import com.memoire.kital.raph.service.dto.NoteDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,6 +30,7 @@ public interface NoteService {
      */
     Page<NoteDTO> findAll(Pageable pageable);
 
+    List<EleveDTOReq> getAllInscription();
 
     /**
      * Get the "id" note.

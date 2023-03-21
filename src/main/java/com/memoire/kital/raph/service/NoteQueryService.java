@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.criteria.JoinType;
 
+import com.memoire.kital.raph.feignRestClient.IEleveRestClient;
+import com.memoire.kital.raph.restClient.EleveDTOReq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -37,9 +39,12 @@ public class NoteQueryService extends QueryService<Note> {
 
     private final NoteMapper noteMapper;
 
-    public NoteQueryService(NoteRepository noteRepository, NoteMapper noteMapper) {
+    private final IEleveRestClient iEleveRestClient;
+
+    public NoteQueryService(NoteRepository noteRepository, NoteMapper noteMapper, IEleveRestClient iEleveRestClient) {
         this.noteRepository = noteRepository;
         this.noteMapper = noteMapper;
+        this.iEleveRestClient = iEleveRestClient;
     }
 
     /**
@@ -64,8 +69,12 @@ public class NoteQueryService extends QueryService<Note> {
     public Page<NoteDTO> findByCriteria(NoteCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Note> specification = createSpecification(criteria);
-        return noteRepository.findAll(specification, page)
-            .map(noteMapper::toDto);
+        Page<Note> notePage=noteRepository.findAll(specification, page);
+        for(Note n : notePage.getContent()){
+            EleveDTOReq eleveDTOReq = iEleveRestClient.getEleve(n.getEleve()).getBody();
+            n.setEleveDTOReq(eleveDTOReq);
+        }
+        return notePage.map(noteMapper::toDto);
     }
 
     /**

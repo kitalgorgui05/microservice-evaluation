@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "inscriptiondb", url = "http://localhost:9081",configuration = FeignClientInterceptor.class)
+@FeignClient(name = "${jhipster.clientApp.name}", url = "http://localhost:8888")
 public interface AnneeRestClient {
     @GetMapping("/api/annees")
     ResponseEntity<List<AnneeClient>> getAllAnnees();

@@ -3,15 +3,15 @@ package com.memoire.kital.raph.restClient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.cloud.openfeign.FeignClient;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MatiereClient {
+public class NiveauClient {
     private String id;
     private String nom;
+    private Set<MatiereClient> matieres = new HashSet<>();
 }

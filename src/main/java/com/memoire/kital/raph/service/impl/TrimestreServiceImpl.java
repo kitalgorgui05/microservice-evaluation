@@ -12,9 +12,11 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -54,13 +56,16 @@ public class TrimestreServiceImpl implements TrimestreService {
             .map(trimestreMapper::toDto);
     }
 
+    @Override
+    public ResponseEntity<List<AnneeClient>> getAnnees() {
+        return anneeRestClient.getAllAnnees();
+    }
+
 
     @Override
     @Transactional(readOnly = true)
     public Optional<TrimestreDTO> findOne(String id) {
-        /*log.debug("Request to get Trimestre : {}", id);
-        return trimestreRepository.findById(id)
-            .map(trimestreMapper::toDto);*/
+        log.debug("Request to get Trimestre : {}", id);
         Trimestre trimestre=trimestreRepository.findById(id).orElse(null);
         AnneeClient anneeClient= anneeRestClient.getAnnee(trimestre.getAnnee()).getBody();
         trimestre.setAnneeClient(anneeClient);

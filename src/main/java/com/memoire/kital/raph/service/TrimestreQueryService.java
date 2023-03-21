@@ -2,8 +2,8 @@ package com.memoire.kital.raph.service;
 
 import java.util.List;
 
-import javax.persistence.criteria.JoinType;
-
+import com.memoire.kital.raph.feignRestClient.AnneeRestClient;
+import com.memoire.kital.raph.restClient.AnneeClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -36,10 +36,12 @@ public class TrimestreQueryService extends QueryService<Trimestre> {
     private final TrimestreRepository trimestreRepository;
 
     private final TrimestreMapper trimestreMapper;
+    private final AnneeRestClient anneeRestClient;
 
-    public TrimestreQueryService(TrimestreRepository trimestreRepository, TrimestreMapper trimestreMapper) {
+    public TrimestreQueryService(TrimestreRepository trimestreRepository, TrimestreMapper trimestreMapper, AnneeRestClient anneeRestClient) {
         this.trimestreRepository = trimestreRepository;
         this.trimestreMapper = trimestreMapper;
+        this.anneeRestClient = anneeRestClient;
     }
 
     /**
@@ -64,8 +66,12 @@ public class TrimestreQueryService extends QueryService<Trimestre> {
     public Page<TrimestreDTO> findByCriteria(TrimestreCriteria criteria, Pageable page) {
         log.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<Trimestre> specification = createSpecification(criteria);
-        return trimestreRepository.findAll(specification, page)
-            .map(trimestreMapper::toDto);
+        Page<Trimestre> trimestrePage=trimestreRepository.findAll(specification, page);
+        for (Trimestre t : trimestrePage.getContent()){
+            AnneeClient anneeClient= anneeRestClient.getAnnee(t.getAnnee()).getBody();
+            t.setAnneeClient(anneeClient);
+        }
+        return trimestrePage.map(trimestreMapper::toDto);
     }
 
     /**

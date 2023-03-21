@@ -12,12 +12,6 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {EvaluationMapper.class})
 public interface NoteMapper extends EntityMapper<NoteDTO, Note> {
 
-    @Mapping(source = "evaluation.id", target = "evaluationId")
-    NoteDTO toDto(Note note);
-
-    @Mapping(source = "evaluationId", target = "evaluation")
-    Note toEntity(NoteDTO noteDTO);
-
     default Note fromId(String id) {
         if (id == null) {
             return null;

@@ -1,7 +1,7 @@
 package com.memoire.kital.raph.service.impl;
 
 import com.memoire.kital.raph.feignRestClient.IEleveRestClient;
-import com.memoire.kital.raph.restClient.EleveClient;
+import com.memoire.kital.raph.restClient.EleveDTOReq;
 import com.memoire.kital.raph.service.NoteService;
 import com.memoire.kital.raph.domain.Note;
 import com.memoire.kital.raph.repository.NoteRepository;
@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,13 +54,18 @@ public class NoteServiceImpl implements NoteService {
             .map(noteMapper::toDto);
     }
 
+    @Override
+    public List<EleveDTOReq> getAllInscription() {
+        return iEleveRestClient.getAllElevesInscrit();
+    }
+
 
     @Override
     @Transactional(readOnly = true)
     public Optional<NoteDTO> findOne(String id) {
         Note note=noteRepository.findById(id).orElse(null);
-        EleveClient eleveClient= iEleveRestClient.getEleve(note.getEleve()).getBody();
-        note.setEleveClient(eleveClient);
+        EleveDTOReq eleveDTOReq = iEleveRestClient.getEleve(note.getEleve()).getBody();
+        note.setEleveDTOReq(eleveDTOReq);
         return Optional.ofNullable(noteMapper.toDto(note));
     }
     @Override

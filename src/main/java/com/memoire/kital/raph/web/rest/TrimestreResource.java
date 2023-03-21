@@ -1,5 +1,6 @@
 package com.memoire.kital.raph.web.rest;
 
+import com.memoire.kital.raph.restClient.AnneeClient;
 import com.memoire.kital.raph.service.TrimestreService;
 import com.memoire.kital.raph.web.rest.errors.BadRequestAlertException;
 import com.memoire.kital.raph.service.dto.TrimestreDTO;
@@ -104,6 +105,11 @@ public class TrimestreResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/trimestres/annees")
+    public ResponseEntity<List<AnneeClient>> getAnnees(){
+        log.debug("REST request to get all AnnneeClient {}");
+        return trimestreService.getAnnees();
+    }
     /**
      * {@code GET  /trimestres/count} : count all the trimestres.
      *

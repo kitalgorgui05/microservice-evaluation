@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "classe", url = "http://localhost:8086", configuration = FeignClientInterceptor.class)
+@FeignClient(name = "${jhipster.clientApp.name}", url = "http://localhost:8802")
 public interface MatiereRestClient {
-
-    @GetMapping("/api/matieres")
-    ResponseEntity<List<MatiereClient>> getAllMatieres();
     @GetMapping("/api/matieres/{id}")
     ResponseEntity<MatiereClient> getMatiere(@PathVariable("id") String id);
 }

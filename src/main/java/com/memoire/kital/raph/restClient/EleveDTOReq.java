@@ -2,13 +2,14 @@ package com.memoire.kital.raph.restClient;
 
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-@Data
+@EqualsAndHashCode
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClasseClient {
+public class EleveDTOReq {
     private String id;
+    private String prenom;
     private String nom;
 }

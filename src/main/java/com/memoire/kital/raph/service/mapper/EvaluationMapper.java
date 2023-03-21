@@ -12,12 +12,6 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {TrimestreMapper.class})
 public interface EvaluationMapper extends EntityMapper<EvaluationDTO, Evaluation> {
 
-    @Mapping(source = "trimestre.id", target = "trimestreId")
-    EvaluationDTO toDto(Evaluation evaluation);
-
-    @Mapping(source = "trimestreId", target = "trimestre")
-    Evaluation toEntity(EvaluationDTO evaluationDTO);
-
     default Evaluation fromId(String id) {
         if (id == null) {
             return null;

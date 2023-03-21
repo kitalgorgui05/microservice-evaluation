@@ -1,5 +1,6 @@
 package com.memoire.kital.raph.web.rest;
 
+import com.memoire.kital.raph.restClient.EleveDTOReq;
 import com.memoire.kital.raph.service.NoteService;
 import com.memoire.kital.raph.web.rest.errors.BadRequestAlertException;
 import com.memoire.kital.raph.service.dto.NoteDTO;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -102,6 +102,12 @@ public class NoteResource {
         Page<NoteDTO> page = noteQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+    // affecter les notes aux eleve inscrits
+    @GetMapping("/notes/eleves")
+    public List<EleveDTOReq> getElevesInscrits() {
+        log.debug("REST request to get Notes of Student saved: {}");
+        return noteService.getAllInscription();
     }
 
     /**

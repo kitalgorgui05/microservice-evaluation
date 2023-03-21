@@ -12,8 +12,6 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {})
 public interface TrimestreMapper extends EntityMapper<TrimestreDTO, Trimestre> {
 
-
-
     default Trimestre fromId(String id) {
         if (id == null) {
             return null;
