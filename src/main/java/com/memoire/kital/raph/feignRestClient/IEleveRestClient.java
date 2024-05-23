@@ -10,8 +10,6 @@ import java.util.List;
 
 @FeignClient(name = "${jhipster.clientApp.name}", url = "http://localhost:8888")
 public interface IEleveRestClient {
-    @GetMapping("/api/eleves/inscriptions")
-    List<EleveDTOReq> getAllElevesInscrit();
     @GetMapping("/api/eleves/{id}")
     ResponseEntity<EleveDTOReq> getEleve(@PathVariable("id") String id);
 }

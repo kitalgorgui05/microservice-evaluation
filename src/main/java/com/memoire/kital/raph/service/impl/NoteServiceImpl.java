@@ -54,11 +54,6 @@ public class NoteServiceImpl implements NoteService {
             .map(noteMapper::toDto);
     }
 
-    @Override
-    public List<EleveDTOReq> getAllInscription() {
-        return iEleveRestClient.getAllElevesInscrit();
-    }
-
 
     @Override
     @Transactional(readOnly = true)

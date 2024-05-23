@@ -103,13 +103,6 @@ public class NoteResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-    // affecter les notes aux eleve inscrits
-    @GetMapping("/notes/eleves")
-    public List<EleveDTOReq> getElevesInscrits() {
-        log.debug("REST request to get Notes of Student saved: {}");
-        return noteService.getAllInscription();
-    }
-
     /**
      * {@code GET  /notes/count} : count all the notes.
      *

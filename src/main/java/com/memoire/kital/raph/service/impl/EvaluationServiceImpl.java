@@ -62,15 +62,11 @@ public class EvaluationServiceImpl implements EvaluationService {
     @Override
     @Transactional(readOnly = true)
     public Optional<EvaluationDTO> findOne(String id) {
-        /*log.debug("Request to get Evaluation : {}", id);
-        return evaluationRepository.findById(id)
-            .map(evaluationMapper::toDto);*/
         Evaluation evaluation=evaluationRepository.findById(id).orElse(null);
         ClasseClient classeClient= classeRestClient.getClasse(evaluation.getClasse()).getBody();
         MatiereClient matiereClient=matiereRestClient.getMatiere(evaluation.getMatiere()).getBody();
         evaluation.setClasseClient(classeClient);
         evaluation.setMatiereClient(matiereClient);
-
         return Optional.ofNullable(evaluationMapper.toDto(evaluation));
     }
 

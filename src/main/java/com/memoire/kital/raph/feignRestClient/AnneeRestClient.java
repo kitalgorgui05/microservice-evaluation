@@ -11,8 +11,6 @@ import java.util.List;
 
 @FeignClient(name = "${jhipster.clientApp.name}", url = "http://localhost:8888")
 public interface AnneeRestClient {
-    @GetMapping("/api/annees")
-    ResponseEntity<List<AnneeClient>> getAllAnnees();
     @GetMapping("/api/annees/{id}")
     ResponseEntity<AnneeClient> getAnnee(@PathVariable("id") String id);
 }

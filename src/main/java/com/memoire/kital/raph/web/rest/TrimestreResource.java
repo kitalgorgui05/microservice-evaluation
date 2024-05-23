@@ -104,12 +104,6 @@ public class TrimestreResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-
-    @GetMapping("/trimestres/annees")
-    public ResponseEntity<List<AnneeClient>> getAnnees(){
-        log.debug("REST request to get all AnnneeClient {}");
-        return trimestreService.getAnnees();
-    }
     /**
      * {@code GET  /trimestres/count} : count all the trimestres.
      *

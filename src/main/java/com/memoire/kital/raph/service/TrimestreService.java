@@ -16,7 +16,6 @@ import java.util.Optional;
 public interface TrimestreService {
     TrimestreDTO save(TrimestreDTO trimestreDTO);
     Page<TrimestreDTO> findAll(Pageable pageable);
-    ResponseEntity<List<AnneeClient>> getAnnees();
     Optional<TrimestreDTO> findOne(String id);
     void delete(String id);
 }

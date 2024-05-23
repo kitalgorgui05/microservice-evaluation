@@ -29,9 +29,6 @@ public interface NoteService {
      * @return the list of entities.
      */
     Page<NoteDTO> findAll(Pageable pageable);
-
-    List<EleveDTOReq> getAllInscription();
-
     /**
      * Get the "id" note.
      *

@@ -57,12 +57,6 @@ public class TrimestreServiceImpl implements TrimestreService {
     }
 
     @Override
-    public ResponseEntity<List<AnneeClient>> getAnnees() {
-        return anneeRestClient.getAllAnnees();
-    }
-
-
-    @Override
     @Transactional(readOnly = true)
     public Optional<TrimestreDTO> findOne(String id) {
         log.debug("Request to get Trimestre : {}", id);
